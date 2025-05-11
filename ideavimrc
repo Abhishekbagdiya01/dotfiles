@@ -1,0 +1,110 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" General LazyVim vibes 💖
+set number
+set relativenumber
+set clipboard=unnamed
+
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+
+" Leader key as space (like LazyVim 😌)
+let mapleader=" "
+nnoremap <leader>? :action IdeavimWhichKey<CR>
+" 👉 <Space><Space>: Open Recent Files
+nnoremap <leader><leader> :action RecentFiles<CR>
+
+" === LSP Navigation ===
+nnoremap <leader>cl :action LspShowToolWindow<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gr :action FindUsages<CR>
+nnoremap gI :action GotoImplementation<CR>
+nnoremap gy :action GotoTypeDeclaration<CR>
+nnoremap gD :action GotoDeclaration<CR>
+nnoremap K :action QuickJavaDoc<CR>
+nnoremap gK :action ParameterInfo<CR>
+
+" Signature Help
+inoremap <C-k> <C-o>:action ParameterInfo<CR>
+
+" === Code Actions ===
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+vnoremap <leader>ca :action ShowIntentionActions<CR>
+
+nnoremap <leader>cc :action RunToCursor<CR>
+vnoremap <leader>cc :action RunToCursor<CR>
+
+nnoremap <leader>cC :action LspShowToolWindow<CR>
+
+" Rename (file and symbol)
+nnoremap <leader>cr :action RenameElement<CR>
+nnoremap <leader>cR :action MoveFile<CR>
+
+" Source Action (closest we can do)
+nnoremap <leader>cA :action ShowIntentionActions<CR>
+
+" === Reference Jumps ===
+nnoremap ]] :action MethodUp<CR>
+nnoremap [[ :action MethodDown<CR>
+nnoremap <A-n> :action MethodDown<CR>
+nnoremap <A-p> :action MethodUp<CR>
+
+
+" 👉 <Space>e:  Run Tool Window
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+
+" 👉  Switch tabs (buffers, kinda)
+nnoremap ]b :action NextTab<CR>
+nnoremap [b :action PreviousTab<CR>
+nnoremap <leader>bd :action CloseEditor<CR>
+
+
+" 👉 <Space>q: Close current tab/file
+nnoremap <leader>q :action CloseContent<CR>
+
+" 👉 <Space>/ : Search in project (like Telescope live_grep)
+nnoremap <leader>/ :action FindInPath<CR>
+
+" 👉 <Space>ff: Find file (like Telescope find_files)
+nnoremap <leader>ff :action SearchEverywhere<CR>
+
+" 👉 <Space>e: Toggle Project Sidebar
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+
+" 👉 <Space>rn: Rename symbol
+nnoremap <leader>rn :action RenameElement<CR>
+
+" 👉 <Space>gr: Find usages (like LazyVim's LSP references)
+nnoremap <leader>gr :action FindUsages<CR>
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
