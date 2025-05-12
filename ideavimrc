@@ -9,82 +9,126 @@
 " text scroll if you mouse-click near the start or end of the window.
 set scrolloff=5
 
-" General LazyVim vibes 💖
-set number
-set relativenumber
-set clipboard=unnamed
+" ❤️ WhichKey Plugin Configs
+set which-key
+set notimeout
+let g:WhichKey_FontSize = 10
+let g:WhichKey_PrefixColor = "#a403fe"
+let g:WhichKey_CommandColor = "#01ffff"
+let g:WhichKey_PrefixStyle = "bold"
+let g:WhichKey_KeyStyle = "italic"
+let g:WhichKey_SortOrder = "by_key_prefix_first"
+let g:WhichKey_ShowTypedSequence = "true"
 
-inoremap <C-n> <Down>
-inoremap <C-p> <Up>
-
-" Leader key as space (like LazyVim 😌)
+" 🧠 Leader key as space
 let mapleader=" "
-nnoremap <leader>? :action IdeavimWhichKey<CR>
-" 👉 <Space><Space>: Open Recent Files
-nnoremap <leader><leader> :action RecentFiles<CR>
 
-" === LSP Navigation ===
+" 🧩 Bindings and their WhichKey Descriptions
+
+" == General ==
+nnoremap <leader>? :action IdeavimWhichKey<CR>
+let g:WhichKeyDesc_["?"] = "Show WhichKey Menu"
+
+nnoremap <leader><leader> :action RecentFiles<CR>
+let g:WhichKeyDesc_["<leader>"] = "Recent Files"
+
+nnoremap <leader>s :action SearchEverywhere<CR>
+let g:WhichKeyDesc_s = "Search Everywhere (Double Shift)"
+
+" == Files and Sidebar ==
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+let g:WhichKeyDesc_e = "Project Sidebar"
+
+
+nnoremap <leader>/ :action FindInPath<CR>
+let g:WhichKeyDesc_["/"] = "Search in Project (Live Grep)"
+
+nnoremap <leader>q :action CloseContent<CR>
+let g:WhichKeyDesc_q = "Close Current File"
+
+nnoremap <leader>bd :action CloseEditor<CR>
+let g:WhichKeyDesc_bd = "Close Editor Tab"
+
+" == LSP / Code ==
 nnoremap <leader>cl :action LspShowToolWindow<CR>
+let g:WhichKeyDesc_cl = "LSP Tool Window"
+
+let g:WhichKeyDesc_c = "Code Action"
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+vnoremap <leader>ca :action ShowIntentionActions<CR>
+let g:WhichKeyDesc_ca = "Code Action"
+
+nnoremap <leader>cc :action RunToCursor<CR>
+vnoremap <leader>cc :action RunToCursor<CR>
+let g:WhichKeyDesc_cc = "Run to Cursor"
+
+nnoremap <leader>cC :action LspShowToolWindow<CR>
+let g:WhichKeyDesc_cC = "Show LSP Window"
+
+nnoremap <leader>cr :action RenameElement<CR>
+let g:WhichKeyDesc_cr = "Rename Symbol"
+
+nnoremap <leader>cR :action MoveFile<CR>
+let g:WhichKeyDesc_cR = "Rename/Move File"
+
+nnoremap <leader>cA :action ShowIntentionActions<CR>
+let g:WhichKeyDesc_cA = "Source Action"
+
+" == References ==
+nnoremap <leader>rn :action RenameElement<CR>
+let g:WhichKeyDesc_rn = "Rename Symbol"
+
+nnoremap <leader>gr :action FindUsages<CR>
+let g:WhichKeyDesc_gr = "Find Usages"
+
+" == Ace Actions ==
+map s <Action>(AceAction)
+map sv <Action>(AceTargetAction)
+map sl <Action>(AceLineAction)
+let g:WhichKeyDesc_s = "Ace Action"
+let g:WhichKeyDesc_sv = "Ace Target Action"
+let g:WhichKeyDesc_sl = "Ace Line Action"
+
+" == Tab Navigation ==
+nnoremap ]b :action NextTab<CR>
+nnoremap [b :action PreviousTab<CR>
+let g:WhichKeyDesc_"]b" = "Next Tab"
+let g:WhichKeyDesc_"[b" = "Previous Tab"
+
+" == Reference Navigation ==
+nnoremap ]] :action MethodUp<CR>
+nnoremap [[ :action MethodDown<CR>
+nnoremap <A-n> :action MethodDown<CR>
+nnoremap <A-p> :action MethodUp<CR>
+let g:WhichKeyDesc_"]]"] = "Go Up (Method)"
+let g:WhichKeyDesc_"[["] = "Go Down (Method)"
+
+" == Signature Help ==
+inoremap <C-k> <C-o>:action ParameterInfo<CR>
+
+" == Docs and Navigation ==
+nnoremap K :action QuickJavaDoc<CR>
+nnoremap gK :action ParameterInfo<CR>
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gr :action FindUsages<CR>
 nnoremap gI :action GotoImplementation<CR>
 nnoremap gy :action GotoTypeDeclaration<CR>
 nnoremap gD :action GotoDeclaration<CR>
-nnoremap K :action QuickJavaDoc<CR>
-nnoremap gK :action ParameterInfo<CR>
 
-" Signature Help
-inoremap <C-k> <C-o>:action ParameterInfo<CR>
+" == Commentary + Yank Highlight ==
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
 
-" === Code Actions ===
-nnoremap <leader>ca :action ShowIntentionActions<CR>
-vnoremap <leader>ca :action ShowIntentionActions<CR>
+" == Misc ==
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+map Q gq
+set incsearch
+set scrolloff=5
+set number
+set relativenumber
+set clipboard=unnamed
 
-nnoremap <leader>cc :action RunToCursor<CR>
-vnoremap <leader>cc :action RunToCursor<CR>
-
-nnoremap <leader>cC :action LspShowToolWindow<CR>
-
-" Rename (file and symbol)
-nnoremap <leader>cr :action RenameElement<CR>
-nnoremap <leader>cR :action MoveFile<CR>
-
-" Source Action (closest we can do)
-nnoremap <leader>cA :action ShowIntentionActions<CR>
-
-" === Reference Jumps ===
-nnoremap ]] :action MethodUp<CR>
-nnoremap [[ :action MethodDown<CR>
-nnoremap <A-n> :action MethodDown<CR>
-nnoremap <A-p> :action MethodUp<CR>
-
-
-" 👉 <Space>e:  Run Tool Window
-nnoremap <leader>e :action ActivateProjectToolWindow<CR>
-
-" 👉  Switch tabs (buffers, kinda)
-nnoremap ]b :action NextTab<CR>
-nnoremap [b :action PreviousTab<CR>
-nnoremap <leader>bd :action CloseEditor<CR>
-
-
-" 👉 <Space>q: Close current tab/file
-nnoremap <leader>q :action CloseContent<CR>
-
-" 👉 <Space>/ : Search in project (like Telescope live_grep)
-nnoremap <leader>/ :action FindInPath<CR>
-
-" 👉 <Space>ff: Find file (like Telescope find_files)
-nnoremap <leader>ff :action SearchEverywhere<CR>
-
-" 👉 <Space>e: Toggle Project Sidebar
-nnoremap <leader>e :action ActivateProjectToolWindow<CR>
-
-" 👉 <Space>rn: Rename symbol
-nnoremap <leader>rn :action RenameElement<CR>
-
-" 👉 <Space>gr: Find usages (like LazyVim's LSP references)
-nnoremap <leader>gr :action FindUsages<CR>
 " Do incremental searching.
 set incsearch
 
