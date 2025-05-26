@@ -23,6 +23,9 @@ set -U fish_user_paths ~/.config/emacs/bin $fish_user_paths
 set -Ux PATH $PATH ~/Android/Sdk/emulator
 set PATH $PATH ~/Android/Sdk/emulator
 alias run-Pixel-6="QT_QPA_PLATFORM=xcb emulator -avd Pixel_6_API_35"
+
+#firebase 
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 #Docker
 alias start-docker="sudo systemctl start docker"
 alias stop-docker="sudo systemctl stop docker"

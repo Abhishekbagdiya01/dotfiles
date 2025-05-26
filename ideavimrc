@@ -81,13 +81,24 @@ let g:WhichKeyDesc_rn = "Rename Symbol"
 nnoremap <leader>gr :action FindUsages<CR>
 let g:WhichKeyDesc_gr = "Find Usages"
 
+
+" ==  quality-of-life Keymaps
+
+" Add semicolon at the end of the line
+nmap <leader>e; A;<Esc>h
+" Add comma at the end of the line
+nmap <leader>e, A,<Esc>h
+
+
+
+
 " == Ace Actions ==
 map s <Action>(AceAction)
 map sv <Action>(AceTargetAction)
 map sl <Action>(AceLineAction)
-let g:WhichKeyDesc_s = "Ace Action"
-let g:WhichKeyDesc_sv = "Ace Target Action"
-let g:WhichKeyDesc_sl = "Ace Line Action"
+" let g:WhichKeyDesc_s = "Ace Action"
+"let g:WhichKeyDesc_sv = "Ace Target Action"
+"let g:WhichKeyDesc_sl = "Ace Line Action"
 
 " == Tab Navigation ==
 nnoremap ]b :action NextTab<CR>
