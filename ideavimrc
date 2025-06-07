@@ -1,32 +1,26 @@
-" .ideavimrc is a configuration file for IdeaVim plugin. It uses
-"   the same commands as the original .vimrc configuration.
-" You can find a list of commands here: https://jb.gg/h38q75
-" Find more examples here: https://jb.gg/share-ideavimrc
+.ideavimrc is a configuration file for IdeaVim plugin. It uses
+  the same commands as the original .vimrc configuration.
+You can find a list of commands here: https://jb.gg/h38q75
+Find more examples here: https://jb.gg/share-ideavimrc
 
 
-
-
-
-" ==================== General Settings ====================
-set scrolloff=5         " Show context lines around cursor
-set incsearch           " Incremental search
-set number              " Show line numbers
-set relativenumber      " Relative line numbers
-set clipboard=unnamed   " Use system clipboard
-
-" Define $MYVIMRC for IdeaVim
+==================== General Settings ====================
+set scrolloff=5                 " Show context lines around cursor
+set incsearch                   " Incremental search
+set number                      " Show line numbers
+set relativenumber              " Relative line numbers
+set clipboard=unnamed           " Use system clipboard
+set visualbell
+set showmode
 let $MYVIMRC = expand('~/.ideavimrc')
-
-" Use Q for formatting, disable Ex mode
-map Q gq
+map Q gq                        " Use Q for formatting
 
 " ==================== Leader Key ====================
-let mapleader=" "       " Set leader key to space
+let mapleader=" "
 
 " ==================== WhichKey Configuration ====================
 set which-key
 set notimeout
-
 let g:WhichKey_FontSize = 10
 let g:WhichKey_PrefixColor = "#a403fe"
 let g:WhichKey_CommandColor = "#01ffff"
@@ -40,20 +34,16 @@ nnoremap <leader>e :action ActivateProjectToolWindow<CR>
 let g:WhichKeyDesc_e = "Project Sidebar"
 
 nnoremap <leader>/ :action FindInPath<CR>
-let g:WhichKeyDesc_["/"] = "Search in Project (Live Grep)"
+let g:WhichKeyDesc_"/" = "Search in Project (Live Grep)"
 
 nnoremap <leader><leader> :action RecentFiles<CR>
-let g:WhichKeyDesc_["<leader>"] = "Recent Files"
+let g:WhichKeyDesc_"<leader>" = "Recent Files"
 
 nnoremap <leader>o :action FileStructurePopup<CR>
 let g:WhichKeyDesc_o = "Outline / File Structure"
 
-" ==================== Terminal ====================
-nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
-let g:WhichKeyDesc_tt = "Toggle Terminal"
-
-nnoremap <leader>ts :action StartNewConsole<CR>
-let g:WhichKeyDesc_ts = "New Terminal Tab"
+nnoremap <C-f> :action GotoFile<CR>
+nnoremap <C-r> :action RecentFiles<CR>
 
 " ==================== Buffers & Tabs ====================
 nnoremap <leader>bb :action Switcher<CR>
@@ -75,6 +65,16 @@ nnoremap ]b :action NextTab<CR>
 nnoremap [b :action PreviousTab<CR>
 let g:WhichKeyDesc_"]b" = "Next Tab"
 let g:WhichKeyDesc_"[b" = "Previous Tab"
+
+" ==================== Terminal ====================
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
+let g:WhichKeyDesc_tt = "Toggle Terminal"
+
+nnoremap <leader>ts :action StartNewConsole<CR>
+let g:WhichKeyDesc_ts = "New Terminal Tab"
+
+nmap <C-t> <Action>(ActivateTerminalToolWindow)
+nmap <leader>t <Action>(Terminal.OpenInTerminal)
 
 " ==================== Code Actions ====================
 nnoremap <leader>cf :action ReformatCode<CR>
@@ -124,7 +124,7 @@ let g:WhichKeyDesc_pi = "Peek Implementations"
 nnoremap <leader>* :action HighlightUsagesInFile<CR>
 let g:WhichKeyDesc_* = "Highlight Symbol in File"
 
-" ==================== Docs and Navigation ====================
+" ==================== Navigation & Docs ====================
 nnoremap K :action QuickJavaDoc<CR>
 nnoremap gK :action ParameterInfo<CR>
 nnoremap gd :action GotoDeclaration<CR>
@@ -134,7 +134,6 @@ nnoremap gI :action GotoImplementation<CR>
 nnoremap gy :action GotoTypeDeclaration<CR>
 nmap gne <Action>(GotoNextError)
 nmap gpe <Action>(GotoPreviousError)
-
 nnoremap <A-n> :action MethodDown<CR>
 nnoremap <A-p> :action MethodUp<CR>
 nnoremap [[ :action MethodDown<CR>
@@ -145,125 +144,115 @@ let g:WhichKeyDesc_"]]" = "Go Up (Method)"
 " ==================== Misc ====================
 nnoremap <leader>; A;<Esc>
 let g:WhichKeyDesc_";" = "Add Semicolon"
-
 nnoremap <leader>, A,<Esc>
-let g:WhichKeyDesc_"," = "Add Comma"nnoremap <leader>? :action IdeavimWhichKey<CR>
-let g:WhichKeyDesc_["?"] = "Show WhichKey Menu"
+let g:WhichKeyDesc_"," = "Add Comma"
+nnoremap <leader>? :action IdeavimWhichKey<CR>
+let g:WhichKeyDesc_"?" = "Show WhichKey Menu"
 
-" ==================== Commentary + Yank Highlight ====================
-Plug 'machakann/vim-highlightedyank'
-Plug 'tpope/vim-commentary'
-
-" ==================== Insert Mode Enhancements ====================
-inoremap <C-n> <Down>
-inoremap <C-p> <Up>
-inoremap <C-k> <C-o>:action ParameterInfo<CR>
-
-"=======================Stolen from others =================================
-
-" Reload my config
-nnoremap <leader>sv :source $MYVIMRC<CR>
-let g:WhichKeyDesc_sv = "Reload Config"
-
-" remaps
-" redo
+" ==================== Quality of Life Remaps ====================
 nnoremap U <C-r>
-" delete current char into black hole register
 nnoremap x "_x
-" delete previous char into black hole register
 nnoremap X "_X
-" change rest of word into black hole register
 nnoremap cw "_cw
-" change word into black hole register
 nnoremap ciw "_ciw
-" send overwritten text into black hole register
 vnoremap p "_dP
-" comfort shortcuts
 nnoremap <C-d> yyp
-" move to first char in line
 nnoremap F ^
-" select to first char in line
 nnoremap vF v^
-
-" select to last char in line
 nnoremap vL v$
-" goto closing/opening bracket pair
 nnoremap B %
-" copy current line into clipboard (without newLine)
 nnoremap <C-c> ^vg_y
-" Select all
 nmap <C-a> gg<S-v>G
-
-" better escape
 imap jk <Esc>
 
-"surround marked text with ()
+" ==================== Surround Shortcuts ====================
+nmap <s> :action AceAction<CR>
+nmap <Space>w :action AceAction<CR>
+nmap <Space>l :action AceLineAction<CR>
+nmap <Space>t :action AceTargetAction<CR>
+" ==================== Surround Shortcuts ====================
 xnoremap <leader>s xi ()<ESC>l"_xP
-" surround marked text with []
 xnoremap <leader>s[ xi []<ESC>l"_xP
 xnoremap <leader>s] xi []<ESC>l"_xP
-" surround marked text with {}
 xnoremap <leader>s{ xi {}<ESC>l"_xP
 xnoremap <leader>s} xi {}<ESC>l"_xP
 
-" terminal
-nmap <C-t> <Action>(ActivateTerminalToolWindow)
-nmap <leader>t <Action>(Terminal.OpenInTerminal)
-
-
-
+" ==================== Window Management ====================
 nmap sv <Action>(SplitVertically)
 nmap ss <Action>(SplitHorizontally)
 nmap sm <Action>(MoveEditorToOppositeTabGroup)
 
-
-
-
-" debugging
+" ==================== Debugging ====================
 nmap <leader>dc <Action>(Debug)
 nmap <leader>ds <Action>(Stop)
 nmap <leader>db <Action>(ToggleLineBreakpoint)
 
-" run
+" ==================== Run ====================
 nmap <leader>rc <Action>(Run)
 nmap <leader>rx <Action>(ChooseRunConfiguration)
 nmap <leader>rr <Action>(Rerun)
 nmap <leader>rs <Action>(Stop)
 nmap <leader>rt <Action>(RunTests)
 
-" todo
+" ==================== TODO ====================
 nmap <leader>to <Action>(ActivateTODOToolWindow)
 
-" Important --> Close Current Buffer with CMD-4 or Control-4 on Windows
-" This allows to close for example the Debugger-Console Windows
-
-" find
-nmap <C-f> <Action>(GotoFile)
-nmap <C-r> <Action>(RecentFiles)
-
-" zen-mode
+" ==================== Zen Mode ====================
 nmap <C-z> <Action>(ToggleDistractionFreeMode)
 
-" move line up or down
+" ==================== Line Movement ====================
 nmap <C-j> <Action>(MoveLineDown)
 nmap <C-k> <Action>(MoveLineUp)
 
+" ==================== Git  ====================
+nmap <leader>gs :action Git.ShowBranches<CR>
+nmap <leader>gb :action Git.Branches<CR>
+nmap <leader>gl :action Git.Log<CR>
 
-" move line up or down
-nmap <C-j> <Action>(MoveLineDown)
-nmap <C-k> <Action>(MoveLineUp)
 
 
-"---------- plugins ----------
-" easy motion
-Plug 'easymotion/vim-easymotion'
-map <leader>J <Plug>(easymotion-s)
-map <leader>j <Plug>(easymotion-f)
+" ==================== Plugins ====================
 
+" NERDTree
 Plug 'preservim/nerdtree'
-map <c-n> :NERDTree<CR>
-":NERDTreeFocus
-":NERDTreeToggle
-map <c-q> :NERDTreeClose<CR>
-":NERDTreeFind
-":NERDTreeRefreshRoot
+map <C-n> :NERDTree<CR>
+map <C-q> :NERDTreeClose<CR>
+
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+
+
+" Multiple Cursor
+Plug 'terryma/vim-multiple-cursors'
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+xmap <C-p> <Plug>RemoveOccurrence
+
+" Note that the default <A-n> and g<A-n> shortcuts don't work on Mac due to dead keys.
+" <A-n> is used to enter accented text e.g. ñ
+" Feel free to pick your own mappings that are not affected. I like to use <leader>
+nmap <leader><C-n> <Plug>AllWholeOccurrences
+xmap <leader><C-n> <Plug>AllWholeOccurrences
+nmap <leader>g<C-n> <Plug>AllOccurrences
+xmap <leader>g<C-n> <Plug>AllOccurrences
+
+
+
+" ==================== Insert Mode Enhancements ====================
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+inoremap <C-k> <C-o>:action ParameterInfo<CR>
+
+" ==================== Reload Config ====================
+nnoremap <leader>sv :source $MYVIMRC<CR>
+let g:WhichKeyDesc_sv = "Reload Config"
+
+" configurations
+nmap \\v <Action>(VimActions)
+
+
